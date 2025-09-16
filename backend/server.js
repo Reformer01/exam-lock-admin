@@ -14,7 +14,7 @@ try {
   serviceAccount = require('./service-account-key.json');
 } catch (err) {
   serviceAccount = {
-    projectId: process.env.FIREBASE_PROJECT_ID,
+    projectId: process.env.FIREBASE_PROJECT_ID?.trim(),
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
   };
@@ -22,7 +22,7 @@ try {
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: `https://${serviceAccount.projectId}-default-rtdb.firebaseio.com`
+  databaseURL: `https://${serviceAccount.projectId.trim()}-default-rtdb.firebaseio.com`
 });
 
 const db = admin.firestore();

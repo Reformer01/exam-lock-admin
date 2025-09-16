@@ -1,5 +1,6 @@
 {
-  "name": "vite-react-typescript-starter",
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "exam-lock-extension",
   "private": true,
   "version": "0.0.0",
   "type": "module",
