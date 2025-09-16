@@ -1,0 +1,330 @@
+/* Exam Lock Extension Styles */
+
+#exam-lock-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  z-index: 999999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  backdrop-filter: blur(10px);
+}
+
+.lock-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 40px;
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid #ff4444;
+}
+
+.lock-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.lock-message {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ff6b6b;
+  white-space: pre-line;
+}
+
+.timer-display {
+  font-size: 48px;
+  font-weight: bold;
+  color: #ff4444;
+  margin: 20px 0;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.violation-count {
+  font-size: 18px;
+  margin: 20px 0;
+  padding: 10px;
+  background: rgba(255, 68, 68, 0.2);
+  border-radius: 8px;
+  color: #ffaaaa;
+}
+
+.contact-info {
+  margin-top: 30px;
+  font-size: 16px;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+.contact-info p {
+  margin: 10px 0;
+}
+
+.contact-info strong {
+  color: #ff9999;
+}
+
+/* Fullscreen Prompt Overlay */
+#fullscreen-prompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  z-index: 1000000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.fullscreen-content {
+  text-align: center;
+  max-width: 500px;
+  padding: 40px;
+  background: rgba(30, 30, 30, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  border: 2px solid #4CAF50;
+}
+
+.fullscreen-icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+.fullscreen-message {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.fullscreen-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.fullscreen-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.fullscreen-info {
+  margin-top: 25px;
+  font-size: 14px;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+.fullscreen-info p {
+  margin: 8px 0;
+}
+
+/* Fullscreen Warning */
+#fullscreen-warning {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 68, 68, 0.95);
+  color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  z-index: 1000001;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  animation: warningPulse 0.5s ease-in-out;
+}
+
+@keyframes warningPulse {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.warning-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.warning-icon {
+  font-size: 24px;
+}
+
+.warning-text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Disable selection and interaction when locked */
+#exam-lock-overlay.active ~ * {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Additional security measures */
+body.exam-locked {
+  overflow: hidden;
+}
+
+body.exam-locked::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 999998;
+  pointer-events: none;
+}
+
+/* Hide browser UI elements when possible */
+@media print {
+  #exam-lock-overlay, #fullscreen-prompt {
+    display: none !important;
+  }
+}
+
+/* Fullscreen-specific styles */
+:fullscreen {
+  background: white;
+}
+
+:fullscreen #fullscreen-prompt {
+  display: none !important;
+}
+
+/* Ensure overlays work in fullscreen */
+:fullscreen #exam-lock-overlay {
+  position: fixed;
+  z-index: 999999;
+}
+
+/* Main Exam Countdown Timer */
+#exam-lock-timer-display {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  z-index: 1000002;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+}
+
+#exam-lock-timer-display .timer-icon {
+  font-size: 18px;
+}
+
+#exam-lock-timer-display .timer-text {
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+#exam-lock-timer-display strong {
+  font-weight: 800;
+  color: #00e676;
+}
+
+@media (max-width: 640px) {
+  #exam-lock-timer-display {
+    top: auto;
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+    justify-content: center;
+  }
+}
+
+/* Enhanced Exam Timer Warning */
+.exam-timer-warning {
+  position: fixed;
+  top: 80px;
+  right: 12px;
+  z-index: 1000002;
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffe08a;
+  padding: 10px 14px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  font-size: 14px;
+}
+
+/* Offline Banner for connectivity issues */
+#exam-lock-offline-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(90deg, #b71c1c, #e53935);
+  color: white;
+  padding: 10px 16px;
+  z-index: 1000003;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  animation: offlinePulse 2.5s ease-in-out infinite;
+}
+#exam-lock-offline-banner .offline-icon { font-size: 16px; }
+#exam-lock-offline-banner .offline-text { font-size: 14px; font-weight: 600; }
+
+/* Non-blocking minor violation warning banner */
+#exam-lock-warning-banner {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 193, 7, 0.95);
+  color: #3e2723;
+  padding: 8px 14px;
+  border-radius: 10px;
+  z-index: 1000002;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  border: 1px solid rgba(0,0,0,0.05);
+  font-size: 14px;
+}
+#exam-lock-warning-banner .warning-icon { font-size: 16px; }
+#exam-lock-warning-banner .warning-text { font-weight: 600; }

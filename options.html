@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Lock Settings</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        
+        .section h2 {
+            margin-top: 0;
+            color: #555;
+        }
+        
+        label {
+            display: block;
+            margin: 15px 0 5px 0;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        
+        input[type="number"] {
+            width: 100px;
+        }
+        
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 10px 10px 0;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .reset-btn {
+            background: #f44336;
+        }
+        
+        .reset-btn:hover {
+            background: #da190b;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            display: none;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border: 1px solid #ffeaa3;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 15px;
+            border: 1px solid #bbdefb;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        
+        .mode-description {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        .fullscreen-section {
+            background: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .feature-highlight h3 {
+            margin-top: 0;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Exam Lock Settings</h1>
+        
+        <div class="warning">
+            <strong>⚠️ Administrator Only:</strong> These settings will apply to all users where this extension is installed. Changes affect exam security behavior across your organization.
+        </div>
+        
+        <form id="settingsForm">
+            <div class="section">
+                <h2>Security Mode</h2>
+                <label for="mode">Action when tab switching is detected:</label>
+                <select id="mode" name="mode">
+                    <option value="submit">Auto-Submit Form (Strictest)</option>
+                    <option value="overlay">Lock with Overlay (Recommended)</option>
+                    <option value="timer">Temporary Lock with Timer</option>
+                </select>
+                <div class="mode-description">
+                    <strong>Auto-Submit:</strong> Immediately submits the exam form<br>
+                    <strong>Lock with Overlay:</strong> Shows blocking overlay until instructor intervention<br>
+                    <strong>Timer:</strong> Temporarily locks exam for specified duration
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Exam Timer</h2>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="enableExamTimer" name="enableExamTimer">
+                    <label for="enableExamTimer">Enable Exam Timer</label>
+                </div>
+                
+                <div id="examTimerSettings">
+                    <label for="examDuration">Exam Duration (minutes):</label>
+                    <input type="number" id="examDuration" name="examDuration" min="1" max="240" value="60">
+                    
+                    <label for="timerAction">Action when time expires:</label>
+                    <select id="timerAction" name="timerAction">
+                        <option value="submit">Auto-Submit Form</option>
+                        <option value="lock">Lock with Overlay</option>
+                        <option value="warn">Show Warning First</option>
+                    </select>
+                    
+                    <label for="timerWarningTime">Show warning before (minutes):</label>
+                    <input type="number" id="timerWarningTime" name="timerWarningTime" min="1" max="10" value="5">
+                </div>
+            </div>
+
+            <div class="section fullscreen-section">
+                <h2>🖥️ Fullscreen Security</h2>
+                <div class="feature-highlight">
+                    <h3>Fullscreen Mode</h3>
+                    <p>Automatically enter fullscreen mode when students open exam forms. This hides browser controls, taskbar, and other distractions while preventing easy tab switching.</p>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="enableFullscreen" name="enableFullscreen">
+                    <label for="enableFullscreen">Enable automatic fullscreen mode</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="forceFullscreen" name="forceFullscreen">
+                    <label for="forceFullscreen">Force fullscreen (treat exit attempts as violations)</label>
+                </div>
+                
+                <label for="fullscreenMessage">Fullscreen prompt message:</label>
+                <textarea id="fullscreenMessage" name="fullscreenMessage" placeholder="Message shown when requesting fullscreen access"></textarea>
+                
+                <div class="info-box">
+                    <strong>Fullscreen Benefits:</strong>
+                    <ul>
+                        <li>Hides browser address bar, bookmarks, and tabs</li>
+                        <li>Prevents easy access to other applications</li>
+                        <li>Removes visual distractions from the desktop</li>
+                        <li>Makes tab switching more difficult and obvious</li>
+                        <li>Blocks F11 key and escape attempts when forced</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Timer Settings</h2>
+                <label for="timerDuration">Lock duration (minutes):</label>
+                <input type="number" id="timerDuration" name="timerDuration" min="1" max="60" value="1">
+                <div class="info-box">
+                    Only applies when "Temporary Lock with Timer" mode is selected. The value is stored as seconds internally.
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Messages</h2>
+                <label for="warningMessage">Warning message:</label>
+                <textarea id="warningMessage" name="warningMessage" placeholder="Message shown for minor violations"></textarea>
+                
+                <label for="lockMessage">Lock message:</label>
+                <textarea id="lockMessage" name="lockMessage" placeholder="Message shown when student is locked out"></textarea>
+                
+                <label for="timerMessage">Timer message:</label>
+                <textarea id="timerMessage" name="timerMessage" placeholder="Message during timer countdown (use {time} for countdown)"></textarea>
+            </div>
+            
+            <div class="section">
+                <h2>Advanced Settings</h2>
+                <label for="maxViolations">Maximum violations</label>
+                <input type="number" id="maxViolations" name="maxViolations" min="1" max="10" value="3">
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="enableLogging" name="enableLogging">
+                    <label for="enableLogging">Enable detailed violation logging</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="strictMode" name="strictMode">
+                    <label for="strictMode">Strict mode (detect additional window events)</label>
+                </div>
+            </div>
+            
+            <div class="status" id="status"></div>
+            
+            <button type="submit">💾 Save Settings</button>
+            <button type="button" class="reset-btn" id="resetBtn">🔄 Reset to Defaults</button>
+        </form>
+        
+        <div class="section">
+            <h2>Violation Management</h2>
+            <p>Clear all violation records and unlock any locked exams.</p>
+            <button type="button" id="clearViolationsBtn" class="reset-btn">Clear All Violations</button>
+            <div id="clearStatus" class="status"></div>
+        </div>
+        
+        <div class="info-box">
+            <strong>🛡️ Security Features Active:</strong>
+            <ul>
+                <li>Page Visibility API monitoring</li>
+                <li>Window focus detection</li>
+                <li>Keyboard shortcut blocking (Alt+Tab, Ctrl+T, F11, F12, etc.)</li>
+                <li>Navigation protection</li>
+                <li>Session persistence</li>
+                <li> Automatic fullscreen mode</li>
+                <li> Fullscreen exit detection</li>
+                <li> Enhanced browser UI hiding</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Backend Integration</h2>
+            <div class="checkbox-group">
+                <input type="checkbox" id="forwardingEnabled" name="forwardingEnabled">
+                <label for="forwardingEnabled">Enable forwarding events to backend</label>
+            </div>
+
+            <label for="backendEndpoint">Backend Endpoint (e.g., https://your-backend.example.com)</label>
+            <input type="text" id="backendEndpoint" name="backendEndpoint" placeholder="https://your-backend.example.com">
+
+            <label for="backendApiKey">Backend API Key (stored locally)</label>
+            <input type="password" id="backendApiKey" name="backendApiKey" placeholder="API Key">
+            <div class="mode-description">When enabled, connectivity and security events can be forwarded to this endpoint from the background service worker.</div>
+        </div>
+    </div>
+    
+    <script src="options.js"></script>
+</body>
+</html>
