@@ -22,6 +22,7 @@ try {
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  databaseURL: `https://${serviceAccount.projectId}-default-rtdb.firebaseio.com`
 });
 
 const db = admin.firestore();
